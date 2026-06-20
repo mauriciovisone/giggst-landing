@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GigGST.in - GST Invoices for Indian Freelancers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-5xl font-bold text-center text-indigo-600 mt-10">GigGST.in</h1>
+    <p class="text-center text-2xl mt-2">GST Invoices + Reminders in 60 seconds</p>
+    <p class="text-center text-green-600 font-medium">For Sole Proprietors & Freelancers in India</p>
+
+    <div class="mt-10 bg-white rounded-2xl shadow p-8">
+      <button onclick="generateDemo()" class="w-full bg-indigo-600 text-white py-6 text-xl font-bold rounded-xl">🚀 Create Your First GST Invoice (Demo)</button>
+      <div id="demoResult" class="hidden mt-6 p-6 bg-green-50 rounded-xl text-center">
+        ✅ Invoice generated! PDF ready • Razorpay link • WhatsApp draft sent.<br>
+        <span class="text-sm">support@giggst.in</span>
+      </div>
+    </div>
+
+    <div class="text-center mt-8">
+      <p class="text-sm text-gray-500">Live on giggst.in • Built for your sole proprietorship</p>
+    </div>
+  </div>
+
+  <script>
+    function generateDemo() {
+      document.getElementById('demoResult').classList.remove('hidden');
+      alert("🎉 Welcome! In the real app this creates PDF + Razorpay + reminder. Deployed on giggst.in");
+    }
+  </script>
+</body>
+</html>
