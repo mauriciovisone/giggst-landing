@@ -27,7 +27,7 @@
   </nav>
 
   <!-- Hero -->
-  <div class="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
+  <div class="max-w-5xl mx-auto px-6 pt-14 pb-8 text-center">
     <h1 class="text-5xl font-bold tracking-tight text-gray-900">GST Invoices.<br>Auto Reminders.<br>Made for Indian Freelancers.</h1>
     <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">Create professional GST invoices in under 60 seconds. Send automatic payment reminders. Stay compliant without Excel.</p>
     
@@ -35,122 +35,129 @@
       <a href="#demo" class="px-8 py-3.5 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700">Try Live Demo</a>
       <a href="#pricing" class="px-8 py-3.5 border border-gray-300 rounded-xl font-semibold text-lg hover:bg-gray-100">See Pricing</a>
     </div>
-    <p class="mt-3 text-sm text-gray-500">No credit card required</p>
   </div>
 
-  <!-- Live Demo Section -->
-  <div id="demo" class="max-w-4xl mx-auto px-6 py-12">
+  <!-- Live Demo -->
+  <div id="demo" class="max-w-5xl mx-auto px-6 py-10">
     <div class="text-center mb-8">
-      <h2 class="text-3xl font-bold">Try it right now — No signup needed</h2>
-      <p class="text-gray-600 mt-2">Create a sample GST invoice and see how it works</p>
+      <h2 class="text-3xl font-bold">Try the Live Demo</h2>
+      <p class="text-gray-600 mt-2">No signup required. See how easy GST invoicing can be.</p>
     </div>
 
     <div class="bg-white rounded-2xl shadow border p-8">
-      <div class="grid md:grid-cols-2 gap-8">
+      <div class="grid lg:grid-cols-5 gap-8">
         
         <!-- Form -->
-        <div>
-          <h3 class="font-semibold mb-4">Invoice Details</h3>
-          
+        <div class="lg:col-span-2">
+          <h3 class="font-semibold mb-4 flex items-center gap-2">
+            <i class="fas fa-edit"></i> Invoice Details
+          </h3>
+
           <div class="space-y-4">
             <div>
               <label class="text-sm text-gray-600">Client Name</label>
-              <input id="clientName" type="text" value="TechCorp Solutions" class="w-full border rounded-lg px-4 py-2 mt-1">
+              <input id="clientName" type="text" value="Acme Technologies Pvt Ltd" class="w-full border rounded-lg px-4 py-2 mt-1">
             </div>
             
+            <div>
+              <label class="text-sm text-gray-600">Client Email</label>
+              <input id="clientEmail" type="email" value="accounts@acme.com" class="w-full border rounded-lg px-4 py-2 mt-1">
+            </div>
+
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="text-sm text-gray-600">Service / Item</label>
-                <input id="itemDesc" type="text" value="Website Development" class="w-full border rounded-lg px-4 py-2 mt-1">
+                <label class="text-sm text-gray-600">Invoice Date</label>
+                <input id="invoiceDate" type="date" class="w-full border rounded-lg px-4 py-2 mt-1">
               </div>
               <div>
-                <label class="text-sm text-gray-600">Amount (₹)</label>
-                <input id="amount" type="number" value="45000" class="w-full border rounded-lg px-4 py-2 mt-1">
+                <label class="text-sm text-gray-600">Due Date</label>
+                <input id="dueDate" type="date" class="w-full border rounded-lg px-4 py-2 mt-1">
               </div>
+            </div>
+
+            <!-- Line Items -->
+            <div>
+              <label class="text-sm text-gray-600 mb-2 block">Items</label>
+              <div id="itemsContainer" class="space-y-3"></div>
+              <button onclick="addItemRow()" class="mt-2 text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1">
+                <i class="fas fa-plus"></i> Add another item
+              </button>
             </div>
 
             <div>
-              <label class="text-sm text-gray-600">GST Rate</label>
-              <select id="gstRate" class="w-full border rounded-lg px-4 py-2 mt-1">
-                <option value="18">18% (Most Services)</option>
-                <option value="12">12%</option>
-                <option value="5">5%</option>
-              </select>
+              <label class="text-sm text-gray-600">Notes (optional)</label>
+              <textarea id="notes" class="w-full border rounded-lg px-4 py-2 mt-1" rows="2" placeholder="Thank you for your business!"></textarea>
             </div>
           </div>
 
-          <button onclick="generateDemoInvoice()" 
+          <button onclick="generateInvoice()" 
                   class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2">
-            <i class="fas fa-magic"></i> 
-            Generate Invoice Preview
+            <i class="fas fa-magic"></i> Generate Invoice Preview
           </button>
         </div>
 
         <!-- Preview -->
-        <div id="invoicePreview" class="hidden border rounded-xl p-6 bg-gray-50">
-          <div class="flex justify-between items-start">
-            <div>
-              <div class="font-bold text-xl text-indigo-600">GigGST</div>
-              <div class="text-sm text-gray-500">support@giggst.in</div>
+        <div class="lg:col-span-3">
+          <div id="invoicePreview" class="hidden border rounded-2xl p-8 bg-white shadow-sm">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="font-bold text-2xl text-indigo-600">GigGST</div>
+                <div class="text-sm text-gray-500">support@giggst.in</div>
+              </div>
+              <div class="text-right">
+                <div class="font-semibold text-lg">Invoice</div>
+                <div class="text-sm text-gray-500" id="previewInvoiceNumber"></div>
+              </div>
             </div>
-            <div class="text-right text-sm">
-              <div class="font-semibold">Invoice #INV-2026-001</div>
-              <div class="text-gray-500">Date: <span id="invDate"></span></div>
-            </div>
-          </div>
 
-          <div class="mt-6 border-t pt-4">
-            <div class="text-sm text-gray-500">Bill To</div>
-            <div id="previewClient" class="font-semibold"></div>
-          </div>
-
-          <div class="mt-6">
-            <table class="w-full text-sm">
-              <tr class="border-b">
-                <td class="py-2 font-medium">Description</td>
-                <td class="py-2 text-right font-medium">Amount</td>
-              </tr>
-              <tr>
-                <td id="previewDesc" class="py-2"></td>
-                <td id="previewAmount" class="py-2 text-right font-semibold"></td>
-              </tr>
-            </table>
-          </div>
-
-          <div class="mt-6 border-t pt-4 text-sm">
-            <div class="flex justify-between">
-              <span>Subtotal</span>
-              <span id="subtotal"></span>
+            <div class="mt-8 grid grid-cols-2 gap-8 text-sm">
+              <div>
+                <div class="text-gray-500 text-xs">BILL TO</div>
+                <div id="previewClientName" class="font-semibold text-lg"></div>
+                <div id="previewClientEmail" class="text-gray-600"></div>
+              </div>
+              <div class="text-right text-sm">
+                <div><span class="text-gray-500">Date:</span> <span id="previewDate"></span></div>
+                <div><span class="text-gray-500">Due Date:</span> <span id="previewDueDate"></span></div>
+              </div>
             </div>
-            <div class="flex justify-between mt-1">
-              <span>GST (<span id="gstPercent"></span>%)</span>
-              <span id="gstAmount"></span>
-            </div>
-            <div class="flex justify-between mt-3 pt-3 border-t font-bold text-lg">
-              <span>Total</span>
-              <span id="totalAmount"></span>
-            </div>
-          </div>
 
-          <div class="mt-6 text-center">
-            <button onclick="simulateSend()" 
-                    class="px-6 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700">
-              <i class="fas fa-paper-plane mr-2"></i> Send to Client + Set Reminder
-            </button>
+            <div class="mt-8">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="border-b text-left">
+                    <th class="py-2 font-medium">Description</th>
+                    <th class="py-2 font-medium text-right">Amount</th>
+                  </tr>
+                </thead>
+                <tbody id="previewItems"></tbody>
+              </table>
+            </div>
+
+            <div class="mt-6 border-t pt-4 text-sm">
+              <div class="flex justify-between"><span>Subtotal</span> <span id="previewSubtotal"></span></div>
+              <div class="flex justify-between mt-1"><span>GST</span> <span id="previewGST"></span></div>
+              <div class="flex justify-between mt-3 pt-3 border-t font-bold text-lg">
+                <span>Total Payable</span> 
+                <span id="previewTotal"></span>
+              </div>
+            </div>
+
+            <div class="mt-6 text-sm text-gray-600" id="previewNotes"></div>
+
+            <div class="mt-8 flex gap-3">
+              <button onclick="simulateDownload()" class="flex-1 py-2.5 border rounded-xl text-sm font-medium hover:bg-gray-50">
+                <i class="fas fa-download mr-2"></i> Download PDF
+              </button>
+              <button onclick="simulateSendWhatsApp()" class="flex-1 py-2.5 bg-green-600 text-white rounded-xl text-sm font-medium hover:bg-green-700">
+                <i class="fab fa-whatsapp mr-2"></i> Send via WhatsApp
+              </button>
+            </div>
           </div>
         </div>
 
       </div>
     </div>
-    
-    <p class="text-center text-xs text-gray-500 mt-4">This is a live demo. Real version saves invoices and sends actual reminders.</p>
-  </div>
-
-  <!-- Features & Pricing sections (keep short for now) -->
-  <div class="max-w-5xl mx-auto px-6 py-12 text-center">
-    <h2 class="text-2xl font-bold mb-2">Ready to stop manual invoicing?</h2>
-    <p class="text-gray-600 mb-6">Join freelancers who are saving 8–10 hours every month.</p>
-    <a href="#pricing" class="inline-block px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold">See Pricing Plans</a>
   </div>
 
   <footer class="text-center py-8 text-sm text-gray-500 border-t">
@@ -158,38 +165,105 @@
   </footer>
 
   <script>
-    function generateDemoInvoice() {
-      const client = document.getElementById('clientName').value;
-      const desc = document.getElementById('itemDesc').value;
-      const amount = parseFloat(document.getElementById('amount').value);
-      const gst = parseFloat(document.getElementById('gstRate').value);
+    let itemCount = 0;
 
-      const gstAmt = (amount * gst) / 100;
-      const total = amount + gstAmt;
+    function addItemRow() {
+      itemCount++;
+      const container = document.getElementById('itemsContainer');
+      const div = document.createElement('div');
+      div.className = 'flex gap-3 items-end';
+      div.innerHTML = `
+        <div class="flex-1">
+          <input type="text" placeholder="Description" class="item-desc w-full border rounded-lg px-3 py-2 text-sm" value="Consulting Services">
+        </div>
+        <div class="w-28">
+          <input type="number" placeholder="Amount" class="item-amount w-full border rounded-lg px-3 py-2 text-sm" value="25000">
+        </div>
+        <button onclick="this.parentElement.remove()" class="text-red-500 px-2">
+          <i class="fas fa-times"></i>
+        </button>
+      `;
+      container.appendChild(div);
+    }
 
-      document.getElementById('previewClient').innerText = client;
-      document.getElementById('previewDesc').innerText = desc;
-      document.getElementById('previewAmount').innerText = '₹' + amount.toLocaleString('en-IN');
-      document.getElementById('gstPercent').innerText = gst;
-      document.getElementById('subtotal').innerText = '₹' + amount.toLocaleString('en-IN');
-      document.getElementById('gstAmount').innerText = '₹' + gstAmt.toFixed(2);
-      document.getElementById('totalAmount').innerText = '₹' + total.toLocaleString('en-IN');
+    // Add two default items on load
+    function initItems() {
+      const container = document.getElementById('itemsContainer');
+      container.innerHTML = '';
       
-      // Set today's date
-      const today = new Date().toLocaleDateString('en-IN');
-      document.getElementById('invDate').innerText = today;
+      // Item 1
+      addItemRow();
+      // Item 2
+      addItemRow();
+    }
+
+    function generateInvoice() {
+      const clientName = document.getElementById('clientName').value;
+      const clientEmail = document.getElementById('clientEmail').value;
+      const date = document.getElementById('invoiceDate').value || new Date().toISOString().split('T')[0];
+      const dueDate = document.getElementById('dueDate').value || new Date(Date.now() + 15*24*60*60*1000).toISOString().split('T')[0];
+      const notes = document.getElementById('notes').value;
+
+      // Get all items
+      const items = [];
+      document.querySelectorAll('#itemsContainer > div').forEach(row => {
+        const desc = row.querySelector('.item-desc').value;
+        const amount = parseFloat(row.querySelector('.item-amount').value) || 0;
+        if (desc && amount > 0) items.push({desc, amount});
+      });
+
+      if (items.length === 0) {
+        alert("Please add at least one item");
+        return;
+      }
+
+      const subtotal = items.reduce((sum, item) => sum + item.amount, 0);
+      const gstRate = 18;
+      const gstAmount = (subtotal * gstRate) / 100;
+      const total = subtotal + gstAmount;
+
+      // Fill preview
+      document.getElementById('previewClientName').innerText = clientName;
+      document.getElementById('previewClientEmail').innerText = clientEmail;
+      document.getElementById('previewDate').innerText = new Date(date).toLocaleDateString('en-IN');
+      document.getElementById('previewDueDate').innerText = new Date(dueDate).toLocaleDateString('en-IN');
+      document.getElementById('previewInvoiceNumber').innerText = 'INV-' + Date.now().toString().slice(-6);
+      document.getElementById('previewSubtotal').innerText = '₹' + subtotal.toLocaleString('en-IN');
+      document.getElementById('previewGST').innerText = `₹${gstAmount.toFixed(2)} (${gstRate}%)`;
+      document.getElementById('previewTotal').innerText = '₹' + total.toLocaleString('en-IN');
+      document.getElementById('previewNotes').innerHTML = notes ? `<strong>Notes:</strong> ${notes}` : '';
+
+      // Fill items
+      const itemsHTML = items.map(item => `
+        <tr class="border-b">
+          <td class="py-2">${item.desc}</td>
+          <td class="py-2 text-right font-medium">₹${item.amount.toLocaleString('en-IN')}</td>
+        </tr>
+      `).join('');
+      document.getElementById('previewItems').innerHTML = itemsHTML;
 
       document.getElementById('invoicePreview').classList.remove('hidden');
       document.getElementById('invoicePreview').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function simulateSend() {
-      alert("✅ Invoice sent to client!\n\nIn the real version, this would:\n• Send email + WhatsApp\n• Set automatic reminders\n• Save to your dashboard");
+    function simulateDownload() {
+      alert("✅ PDF Downloaded!\n\n(In real version, this would generate and download a proper PDF invoice)");
     }
 
-    // Auto-generate demo on load for better experience
+    function simulateSendWhatsApp() {
+      alert("✅ Invoice sent via WhatsApp!\n\n(In real version, this would send a message with invoice link + set automatic reminders)");
+    }
+
+    // Initialize
     window.onload = function() {
-      // Optional: Auto fill and generate demo after 2 seconds
+      initItems();
+      
+      // Set default dates
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('invoiceDate').value = today;
+      
+      const due = new Date(Date.now() + 15*24*60*60*1000).toISOString().split('T')[0];
+      document.getElementById('dueDate').value = due;
     }
   </script>
 
