@@ -19,169 +19,179 @@
       <div class="flex items-center gap-4">
         <a href="#features" class="text-gray-600 hover:text-gray-900">Features</a>
         <a href="#pricing" class="text-gray-600 hover:text-gray-900">Pricing</a>
+        <a href="#demo" class="text-gray-600 hover:text-gray-900">Demo</a>
         <a href="mailto:support@giggst.in" class="text-gray-600 hover:text-gray-900">Support</a>
-        <a href="#" class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium">Try Free</a>
+        <a href="#demo" class="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700">Try Demo</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero -->
-  <div class="max-w-5xl mx-auto px-6 pt-16 pb-12 text-center">
+  <div class="max-w-5xl mx-auto px-6 pt-16 pb-10 text-center">
     <h1 class="text-5xl font-bold tracking-tight text-gray-900">GST Invoices.<br>Auto Reminders.<br>Made for Indian Freelancers.</h1>
-    <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">Create professional GST invoices in 60 seconds. Send polite payment reminders automatically. Stay compliant without the Excel headache.</p>
+    <p class="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">Create professional GST invoices in under 60 seconds. Send automatic payment reminders. Stay compliant without Excel.</p>
     
     <div class="mt-8 flex justify-center gap-4">
-      <a href="#" class="px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700">Start Free Trial</a>
-      <a href="#demo" class="px-8 py-3 border border-gray-300 rounded-xl font-semibold text-lg hover:bg-gray-100">Watch 1-min Demo</a>
+      <a href="#demo" class="px-8 py-3.5 bg-indigo-600 text-white rounded-xl font-semibold text-lg hover:bg-indigo-700">Try Live Demo</a>
+      <a href="#pricing" class="px-8 py-3.5 border border-gray-300 rounded-xl font-semibold text-lg hover:bg-gray-100">See Pricing</a>
     </div>
-    <p class="mt-3 text-sm text-gray-500">No credit card required • Cancel anytime</p>
+    <p class="mt-3 text-sm text-gray-500">No credit card required</p>
   </div>
 
-  <!-- Trust Bar -->
-  <div class="max-w-5xl mx-auto px-6 pb-12">
-    <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 text-sm text-gray-500">
-      <div>✓ Built for Sole Proprietors</div>
-      <div>✓ Auto GST Calculation</div>
-      <div>✓ WhatsApp + Email Reminders</div>
-      <div>✓ GSTR-1 Export Ready</div>
+  <!-- Live Demo Section -->
+  <div id="demo" class="max-w-4xl mx-auto px-6 py-12">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-bold">Try it right now — No signup needed</h2>
+      <p class="text-gray-600 mt-2">Create a sample GST invoice and see how it works</p>
     </div>
-  </div>
 
-  <!-- Problem Section -->
-  <div class="max-w-5xl mx-auto px-6 py-12">
-    <div class="text-center mb-10">
-      <h2 class="text-3xl font-bold">Tired of manual GST invoicing?</h2>
-      <p class="mt-2 text-gray-600">Most freelancers lose hours every month on invoices, follow-ups, and compliance.</p>
+    <div class="bg-white rounded-2xl shadow border p-8">
+      <div class="grid md:grid-cols-2 gap-8">
+        
+        <!-- Form -->
+        <div>
+          <h3 class="font-semibold mb-4">Invoice Details</h3>
+          
+          <div class="space-y-4">
+            <div>
+              <label class="text-sm text-gray-600">Client Name</label>
+              <input id="clientName" type="text" value="TechCorp Solutions" class="w-full border rounded-lg px-4 py-2 mt-1">
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label class="text-sm text-gray-600">Service / Item</label>
+                <input id="itemDesc" type="text" value="Website Development" class="w-full border rounded-lg px-4 py-2 mt-1">
+              </div>
+              <div>
+                <label class="text-sm text-gray-600">Amount (₹)</label>
+                <input id="amount" type="number" value="45000" class="w-full border rounded-lg px-4 py-2 mt-1">
+              </div>
+            </div>
+
+            <div>
+              <label class="text-sm text-gray-600">GST Rate</label>
+              <select id="gstRate" class="w-full border rounded-lg px-4 py-2 mt-1">
+                <option value="18">18% (Most Services)</option>
+                <option value="12">12%</option>
+                <option value="5">5%</option>
+              </select>
+            </div>
+          </div>
+
+          <button onclick="generateDemoInvoice()" 
+                  class="mt-6 w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2">
+            <i class="fas fa-magic"></i> 
+            Generate Invoice Preview
+          </button>
+        </div>
+
+        <!-- Preview -->
+        <div id="invoicePreview" class="hidden border rounded-xl p-6 bg-gray-50">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="font-bold text-xl text-indigo-600">GigGST</div>
+              <div class="text-sm text-gray-500">support@giggst.in</div>
+            </div>
+            <div class="text-right text-sm">
+              <div class="font-semibold">Invoice #INV-2026-001</div>
+              <div class="text-gray-500">Date: <span id="invDate"></span></div>
+            </div>
+          </div>
+
+          <div class="mt-6 border-t pt-4">
+            <div class="text-sm text-gray-500">Bill To</div>
+            <div id="previewClient" class="font-semibold"></div>
+          </div>
+
+          <div class="mt-6">
+            <table class="w-full text-sm">
+              <tr class="border-b">
+                <td class="py-2 font-medium">Description</td>
+                <td class="py-2 text-right font-medium">Amount</td>
+              </tr>
+              <tr>
+                <td id="previewDesc" class="py-2"></td>
+                <td id="previewAmount" class="py-2 text-right font-semibold"></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="mt-6 border-t pt-4 text-sm">
+            <div class="flex justify-between">
+              <span>Subtotal</span>
+              <span id="subtotal"></span>
+            </div>
+            <div class="flex justify-between mt-1">
+              <span>GST (<span id="gstPercent"></span>%)</span>
+              <span id="gstAmount"></span>
+            </div>
+            <div class="flex justify-between mt-3 pt-3 border-t font-bold text-lg">
+              <span>Total</span>
+              <span id="totalAmount"></span>
+            </div>
+          </div>
+
+          <div class="mt-6 text-center">
+            <button onclick="simulateSend()" 
+                    class="px-6 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700">
+              <i class="fas fa-paper-plane mr-2"></i> Send to Client + Set Reminder
+            </button>
+          </div>
+        </div>
+
+      </div>
     </div>
     
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-2xl border">
-        <i class="fas fa-clock text-red-500 text-2xl mb-4"></i>
-        <h3 class="font-semibold">Hours wasted on Excel</h3>
-        <p class="text-gray-600 mt-2 text-sm">Calculating GST, HSN codes, and place of supply manually every time.</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border">
-        <i class="fas fa-money-bill-wave text-red-500 text-2xl mb-4"></i>
-        <h3 class="font-semibold">Late payments killing cash flow</h3>
-        <p class="text-gray-600 mt-2 text-sm">Clients forget or delay payments. You keep chasing manually.</p>
-      </div>
-      <div class="bg-white p-6 rounded-2xl border">
-        <i class="fas fa-exclamation-triangle text-red-500 text-2xl mb-4"></i>
-        <h3 class="font-semibold">GST compliance stress</h3>
-        <p class="text-gray-600 mt-2 text-sm">Wrong calculations, missed GSTR deadlines, and penalty fears.</p>
-      </div>
-    </div>
+    <p class="text-center text-xs text-gray-500 mt-4">This is a live demo. Real version saves invoices and sends actual reminders.</p>
   </div>
 
-  <!-- Features -->
-  <div id="features" class="max-w-5xl mx-auto px-6 py-12">
-    <h2 class="text-3xl font-bold text-center mb-10">Everything you need in one simple tool</h2>
-    
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="flex gap-4">
-        <i class="fas fa-file-invoice text-3xl text-indigo-600 mt-1"></i>
-        <div>
-          <h3 class="font-semibold">Instant GST Invoices</h3>
-          <p class="text-gray-600 text-sm mt-1">Auto GST, HSN, place of supply & tax breakdown. Looks professional every time.</p>
-        </div>
-      </div>
-      <div class="flex gap-4">
-        <i class="fas fa-bell text-3xl text-indigo-600 mt-1"></i>
-        <div>
-          <h3 class="font-semibold">Smart Payment Reminders</h3>
-          <p class="text-gray-600 text-sm mt-1">Auto email + WhatsApp reminders on due date + follow-ups. Polite but effective.</p>
-        </div>
-      </div>
-      <div class="flex gap-4">
-        <i class="fas fa-users text-3xl text-indigo-600 mt-1"></i>
-        <div>
-          <h3 class="font-semibold">Client Portal</h3>
-          <p class="text-gray-600 text-sm mt-1">Share a secure link. Clients can view & pay invoices directly.</p>
-        </div>
-      </div>
-      <div class="flex gap-4">
-        <i class="fas fa-file-export text-3xl text-indigo-600 mt-1"></i>
-        <div>
-          <h3 class="font-semibold">GSTR-1 Export</h3>
-          <p class="text-gray-600 text-sm mt-1">One-click export ready for GST portal filing. No more manual data entry.</p>
-        </div>
-      </div>
-    </div>
+  <!-- Features & Pricing sections (keep short for now) -->
+  <div class="max-w-5xl mx-auto px-6 py-12 text-center">
+    <h2 class="text-2xl font-bold mb-2">Ready to stop manual invoicing?</h2>
+    <p class="text-gray-600 mb-6">Join freelancers who are saving 8–10 hours every month.</p>
+    <a href="#pricing" class="inline-block px-8 py-3 bg-indigo-600 text-white rounded-xl font-semibold">See Pricing Plans</a>
   </div>
 
-  <!-- How it works -->
-  <div class="bg-white py-12">
-    <div class="max-w-5xl mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-10">Get started in 3 simple steps</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="text-center">
-          <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">1</div>
-          <h3 class="mt-4 font-semibold">Create your first invoice</h3>
-          <p class="text-gray-600 mt-2 text-sm">Add client details + items. GST is calculated automatically.</p>
-        </div>
-        <div class="text-center">
-          <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">2</div>
-          <h3 class="mt-4 font-semibold">Send & get paid faster</h3>
-          <p class="text-gray-600 mt-2 text-sm">Share link or send via WhatsApp. Reminders go out automatically.</p>
-        </div>
-        <div class="text-center">
-          <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto text-xl font-bold">3</div>
-          <h3 class="mt-4 font-semibold">Stay compliant</h3>
-          <p class="text-gray-600 mt-2 text-sm">Download GSTR-1 report anytime. Filing becomes 10x easier.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Pricing -->
-  <div id="pricing" class="max-w-5xl mx-auto px-6 py-16">
-    <h2 class="text-3xl font-bold text-center mb-3">Simple pricing. Cancel anytime.</h2>
-    <p class="text-center text-gray-600 mb-10">Start free. Upgrade when you need more.</p>
-    
-    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-      <!-- Free -->
-      <div class="border rounded-2xl p-8">
-        <h3 class="font-bold text-xl">Free</h3>
-        <p class="text-4xl font-bold mt-2">₹0</p>
-        <p class="text-sm text-gray-500">Forever</p>
-        <ul class="mt-6 space-y-3 text-sm">
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Up to 10 invoices/month</li>
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Basic GST calculation</li>
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Email reminders</li>
-        </ul>
-        <a href="#" class="mt-8 block text-center border border-gray-300 py-2.5 rounded-xl font-medium">Get Started Free</a>
-      </div>
-      
-      <!-- Pro -->
-      <div class="border-2 border-indigo-600 rounded-2xl p-8 relative">
-        <div class="absolute -top-3 right-6 bg-indigo-600 text-white text-xs px-3 py-1 rounded-full">Most Popular</div>
-        <h3 class="font-bold text-xl">Pro</h3>
-        <p class="text-4xl font-bold mt-2">₹399 <span class="text-base font-normal">/month</span></p>
-        <ul class="mt-6 space-y-3 text-sm">
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Unlimited invoices</li>
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> WhatsApp reminders</li>
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Client portal + payment links</li>
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> GSTR-1 one-click export</li>
-          <li class="flex gap-2"><i class="fas fa-check text-green-500 mt-1"></i> Priority support</li>
-        </ul>
-        <a href="#" class="mt-8 block text-center bg-indigo-600 text-white py-2.5 rounded-xl font-medium hover:bg-indigo-700">Start 14-day Free Trial</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- CTA -->
-  <div class="bg-indigo-600 py-12">
-    <div class="max-w-xl mx-auto text-center px-6">
-      <h2 class="text-white text-3xl font-bold">Ready to stop chasing payments?</h2>
-      <p class="text-indigo-200 mt-2">Join hundreds of freelancers who are already saving time every month.</p>
-      <a href="#" class="mt-6 inline-block px-8 py-3 bg-white text-indigo-600 font-semibold rounded-xl">Start Free Trial</a>
-      <p class="text-indigo-200 text-sm mt-3">support@giggst.in • Built for Indian freelancers</p>
-    </div>
-  </div>
-
-  <footer class="text-center py-8 text-sm text-gray-500">
-    © 2026 GigGST.in • Made for Indian Sole Proprietors & Freelancers
+  <footer class="text-center py-8 text-sm text-gray-500 border-t">
+    © 2026 GigGST.in • support@giggst.in
   </footer>
+
+  <script>
+    function generateDemoInvoice() {
+      const client = document.getElementById('clientName').value;
+      const desc = document.getElementById('itemDesc').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const gst = parseFloat(document.getElementById('gstRate').value);
+
+      const gstAmt = (amount * gst) / 100;
+      const total = amount + gstAmt;
+
+      document.getElementById('previewClient').innerText = client;
+      document.getElementById('previewDesc').innerText = desc;
+      document.getElementById('previewAmount').innerText = '₹' + amount.toLocaleString('en-IN');
+      document.getElementById('gstPercent').innerText = gst;
+      document.getElementById('subtotal').innerText = '₹' + amount.toLocaleString('en-IN');
+      document.getElementById('gstAmount').innerText = '₹' + gstAmt.toFixed(2);
+      document.getElementById('totalAmount').innerText = '₹' + total.toLocaleString('en-IN');
+      
+      // Set today's date
+      const today = new Date().toLocaleDateString('en-IN');
+      document.getElementById('invDate').innerText = today;
+
+      document.getElementById('invoicePreview').classList.remove('hidden');
+      document.getElementById('invoicePreview').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function simulateSend() {
+      alert("✅ Invoice sent to client!\n\nIn the real version, this would:\n• Send email + WhatsApp\n• Set automatic reminders\n• Save to your dashboard");
+    }
+
+    // Auto-generate demo on load for better experience
+    window.onload = function() {
+      // Optional: Auto fill and generate demo after 2 seconds
+    }
+  </script>
 
 </body>
 </html>
